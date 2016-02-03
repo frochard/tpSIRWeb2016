@@ -29,8 +29,6 @@ function DnD(canvas, interactor) {
 
     this.maFctGérantLeRelâchement+function(evt) {
       if(this.boutonPressee==true){
-        this.xFinal=getMousePosition(canvas,evt).x;
-        this.yFinal=getMousePosition(canvas,evt).y;
         this.boutonPressee=false;
         console.log("x final : " + this.xFinal);
         console.log("y final : " + this.yFinal);
