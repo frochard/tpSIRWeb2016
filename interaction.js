@@ -11,27 +11,32 @@ function DnD(canvas, interactor) {
 
 	// Developper les 3 fonctions gérant les événements
     this.maFctGérantLaPression= function(evt) {
-      this.xInitial=getMousePosition(canvas,evt).x;
-      this.yInitial=getMousePosition(canvas,evt).y;
-      this.boutonPressee=true;
-      console.log("x initial : " + this.xInitial);
+        if(this.boutonPressee==false) {
+            this.boutonPressee=true;
+            this.xInitial = getMousePosition(canvas, evt).x;
+            this.yInitial = getMousePosition(canvas, evt).y;
+            pencil.onInteractionStart(this);
+        }
+/*      console.log("x initial : " + this.xInitial);
       console.log("y initial : " + this.yInitial);
-    }.bind(this) ;
+  */  }.bind(this) ;
 
     this.maFctGérantLeDéplacement=function(evt) {
       if(this.boutonPressee==true){
         this.xFinal=getMousePosition(canvas,evt).x;
         this.yFinal=getMousePosition(canvas,evt).y;
-        console.log("x final : " + this.xFinal);
+          pencil.onInteractionUpdate(this);
+/*        console.log("x final : " + this.xFinal);
         console.log("y final : " + this.yFinal);
-      }
+  */    }
     }.bind(this);
 
-    this.maFctGérantLeRelâchement+function(evt) {
-      if(this.boutonPressee==true){
+    this.maFctGérantLeRelâchement=function(evt) {
+        if(this.boutonPressee==true){
         this.boutonPressee=false;
-        console.log("x final : " + this.xFinal);
-        console.log("y final : " + this.yFinal);
+          pencil.onInteractionEnd(this);
+          console.log("x final : " + this.xFinal);
+          console.log("y final : " + this.yFinal);
       }
     }.bind(this) ;
 
