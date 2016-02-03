@@ -11,8 +11,8 @@ function DnD(canvas, interactor) {
 
 	// Developper les 3 fonctions gérant les événements
     this.maFctGérantLaPression= function(evt) {
-      this.xInitial=evt.x;
-      this.yInitial=evt.y;
+      this.xInitial=getMousePosition(canvas,evt).x;
+      this.yInitial=getMousePosition(canvas,evt).y;
       this.boutonPressee=true;
       console.log("x initial : " + this.xInitial);
       console.log("y initial : " + this.yInitial);
@@ -20,8 +20,8 @@ function DnD(canvas, interactor) {
 
     this.maFctGérantLeDéplacement=function(evt) {
       if(this.boutonPressee==true){
-        this.xFinal=10//evt.x;
-        this.yFinal=evt.y;
+        this.xFinal=getMousePosition(canvas,evt).x;
+        this.yFinal=getMousePosition(canvas,evt).y;
         console.log("x final : " + this.xFinal);
         console.log("y final : " + this.yFinal);
       }
@@ -29,8 +29,8 @@ function DnD(canvas, interactor) {
 
     this.maFctGérantLeRelâchement+function(evt) {
       if(this.boutonPressee==true){
-        this.xFinal=evt.x;
-        this.yFinal=evt.y;
+        this.xFinal=getMousePosition(canvas,evt).x;
+        this.yFinal=getMousePosition(canvas,evt).y;
         this.boutonPressee=false;
         console.log("x final : " + this.xFinal);
         console.log("y final : " + this.yFinal);
@@ -55,6 +55,4 @@ function getMousePosition(canvas, evt) {
     y: evt.clientY - rect.top
   };
 };
-
-
 
