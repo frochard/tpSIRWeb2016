@@ -52,7 +52,6 @@ function DnD(canvas, interactor) {
 
 };
 
-
 // Place le point de l'événement evt relativement à la position du canvas.
 function getMousePosition(canvas, evt) {
   var rect = canvas.getBoundingClientRect();
