@@ -33,13 +33,16 @@ function DnD(canvas, interactor) {
 
     this.maFctGérantLeRelâchement=function(evt) {
         if(this.boutonPressee==true){
-        this.boutonPressee=false;
-          pencil.onInteractionEnd(this);
-          console.log("x final : " + this.xFinal);
-          console.log("y final : " + this.yFinal);
+            this.boutonPressee=false;
+            pencil.onInteractionEnd(this);
+            this.xInitial = 0;
+            this.yInitial =0;
+            this.xFinal = 0;
+            this.yFinal =0;
+/*            console.log("x final : " + this.xFinal);
+            console.log("y final : " + this.yFinal);*/
       }
     }.bind(this) ;
-
 
   // Associer les fonctions précédentes aux évènements du canvas.
   var Canvas = document.getElementById("myCanvas");
