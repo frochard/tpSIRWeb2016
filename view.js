@@ -6,14 +6,14 @@ Rectangle.prototype.paint = function(ctx) {
     ctx.strokeStyle=this.couleur;
 
     console.log("ctx", JSON.stringify(this));
-    console.log(this.originX, this.originY, this.originX+this.width, this.originY+this.height);
-    ctx.rect(this.originX, this.originY, this.originX+this.width, this.originY+this.height);
+    console.log(this.originX, this.originY, this.width, this.height);
+    ctx.rect(this.originX, this.originY, this.width, this.height);
     ctx.stroke();
 };
 
 Line.prototype.paint = function(ctx) {
     console.log("ctx", JSON.stringify(this));
-    console.log(this.originX, this.originY, this.originX+this.width, this.originY+this.height);
+    console.log(this.originX, this.originY, this.width, this.height);
 
     ctx.beginPath();
     ctx.moveTo(this.xA, this.yA);

@@ -17,9 +17,9 @@ function DnD(canvas, interactor) {
             this.yInitial = getMousePosition(canvas, evt).y;
             pencil.onInteractionStart(this);
         }
-/*      console.log("x initial : " + this.xInitial);
+      console.log("x initial : " + this.xInitial);
       console.log("y initial : " + this.yInitial);
-  */  }.bind(this) ;
+    }.bind(this) ;
 
     this.maFctGérantLeDéplacement=function(evt) {
       if(this.boutonPressee==true){
@@ -33,14 +33,15 @@ function DnD(canvas, interactor) {
 
     this.maFctGérantLeRelâchement=function(evt) {
         if(this.boutonPressee==true){
+            console.log("x final : " + this.xFinal);
+            console.log("y final : " + this.yFinal);
             this.boutonPressee=false;
             pencil.onInteractionEnd(this);
+
             this.xInitial = 0;
             this.yInitial =0;
             this.xFinal = 0;
             this.yFinal =0;
-/*            console.log("x final : " + this.xFinal);
-            console.log("y final : " + this.yFinal);*/
       }
     }.bind(this) ;
 

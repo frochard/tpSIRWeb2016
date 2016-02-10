@@ -43,7 +43,7 @@ function Pencil(ctx, drawing, canvas) {
 			}
 		case editingMode.line: {
 			//Création de la ligne
-				var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal-DnD.xInitial, DnD.yFinal-DnD.yInitial, this.currLineWidth, this.currColour);
+				var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
 				break;
 			}
 		}
@@ -55,7 +55,7 @@ function Pencil(ctx, drawing, canvas) {
 			var rec = new Rectangle(DnD.xInitial, DnD.yInitial, DnD.xFinal-DnD.xInitial, DnD.yFinal-DnD.yInitial, this.currLineWidth, this.currColour);
 		}else if(butLine.checked){
 			//Création de la ligne
-			var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal-DnD.xInitial, DnD.yFinal-DnD.yInitial, this.currLineWidth, this.currColour);
+			var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
 		}else{
 			alert('La sélection de la forme est invalide');
 			console.log('La sélection de la forme est invalide');
@@ -75,7 +75,7 @@ function Pencil(ctx, drawing, canvas) {
 			rec.paint(ctx);
 		}else if(butLine.checked){
 			//Création de la ligne
-			var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal-DnD.xInitial, DnD.yFinal-DnD.yInitial, this.currLineWidth, this.currColour);
+			var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
 			line.paint(ctx);
 		}else{
 			alert('La sélection de la forme est invalide');
