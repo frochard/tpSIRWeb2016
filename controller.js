@@ -17,9 +17,9 @@ function Pencil(ctx, drawing, canvas) {
 		//Test de la forme
 		var butRect = document.getElementById('butRect'),butLine = document.getElementById('butLine'),
 			spinnerWidth=document.getElementById('spinnerWidth'),colour=document.getElementById('colour');
-		this.currLineWidth= spinnerWidth.innerHTML;
-		this.currColour=colour.innerHTML;
-		console.log(this.currColour+' '+this.currLineWidth);
+		this.currLineWidth= spinnerWidth.value;
+		this.currColour=colour.value;
+		console.log('couleur: '+this.currColour+' '+'epaisseur: '+this.currLineWidth);
 
 		var editingMode = { rect: 0, line: 1 };
 
@@ -36,7 +36,9 @@ function Pencil(ctx, drawing, canvas) {
 		switch(this.currEditingMode){
 		case editingMode.rect: {
 			//Création du rectangle
-			var rec = new Rectangle(DnD.xInitial, DnD.yInitial, DnD.xFinal-DnD.xInitial, DnD.yFinal-DnD.yInitial, this.currLineWidth, this.currColour);
+			var largeur = DnD.xFinal-DnD.xInitial;
+			var hauteur = DnD.yFinal-DnD.yInitial;
+			var rec = new Rectangle(DnD.xInitial, DnD.yInitial, largeur, hauteur, this.currLineWidth, this.currColour);
 			break;
 			}
 		case editingMode.line: {
