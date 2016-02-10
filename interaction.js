@@ -17,8 +17,8 @@ function DnD(canvas, interactor) {
             this.yInitial = getMousePosition(canvas, evt).y;
             pencil.onInteractionStart(this);
         }
-      console.log("x initial : " + this.xInitial);
-      console.log("y initial : " + this.yInitial);
+  /*    console.log("x initial : " + this.xInitial);
+      console.log("y initial : " + this.yInitial);*/
     }.bind(this) ;
 
     this.maFctGérantLeDéplacement=function(evt) {
@@ -27,17 +27,17 @@ function DnD(canvas, interactor) {
         this.yFinal=getMousePosition(canvas,evt).y;
           pencil.onInteractionUpdate(this);
 /*        console.log("x final : " + this.xFinal);
-        console.log("y final : " + this.yFinal);
-  */    }
+        console.log("y final : " + this.yFinal);*/
+      }
     }.bind(this);
 
     this.maFctGérantLeRelâchement=function(evt) {
         if(this.boutonPressee==true){
-            console.log("x final : " + this.xFinal);
-            console.log("y final : " + this.yFinal);
+            this.xFinal=getMousePosition(canvas,evt).x;
+            this.yFinal=getMousePosition(canvas,evt).y;
             this.boutonPressee=false;
             pencil.onInteractionEnd(this);
-
+            //Réinitialisation des coordonnées pour les Drag'n drop
             this.xInitial = 0;
             this.yInitial =0;
             this.xFinal = 0;
@@ -50,7 +50,6 @@ function DnD(canvas, interactor) {
   canvas.addEventListener('mousedown', this.maFctGérantLaPression, false);
   canvas.addEventListener('mousemove', this.maFctGérantLeDéplacement, false);
   canvas.addEventListener('mouseup', this.maFctGérantLeRelâchement, false);
-
 };
 
 // Place le point de l'événement evt relativement à la position du canvas.
@@ -61,4 +60,3 @@ function getMousePosition(canvas, evt) {
     y: evt.clientY - rect.top
   };
 };
-

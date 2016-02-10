@@ -4,7 +4,7 @@ function Pencil(ctx, drawing, canvas) {
 	this.currEditingMode = editingMode.line;
 	this.currLineWidth = 5;
 	this.currColour = '#000000';
-	this.currentShape = 0;
+	this.currentShape=null;
 
 	// Liez ici les widgets à la classe pour modifier les attributs présents ci-dessus.
 
@@ -12,17 +12,13 @@ function Pencil(ctx, drawing, canvas) {
 
 	// Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd
 	this.onInteractionStart= function(DnD) {
-
-
 		//Test de la forme
 		var butRect = document.getElementById('butRect'),butLine = document.getElementById('butLine'),
 			spinnerWidth=document.getElementById('spinnerWidth'),colour=document.getElementById('colour');
 		this.currLineWidth= spinnerWidth.value;
 		this.currColour=colour.value;
-		console.log('couleur: '+this.currColour+' '+'epaisseur: '+this.currLineWidth);
 
 		var editingMode = { rect: 0, line: 1 };
-
 		if(butRect.checked) {
 			this.currEditingMode=editingMode.rect;
 		}else if(butLine.checked){
@@ -38,55 +34,57 @@ function Pencil(ctx, drawing, canvas) {
 			//Création du rectangle
 			var largeur = DnD.xFinal-DnD.xInitial;
 			var hauteur = DnD.yFinal-DnD.yInitial;
-			var rec = new Rectangle(DnD.xInitial, DnD.yInitial, largeur, hauteur, this.currLineWidth, this.currColour);
+			this.currentShape = new Rectangle(DnD.xInitial, DnD.yInitial, largeur, hauteur, this.currLineWidth, this.currColour);
 			break;
 			}
 		case editingMode.line: {
 			//Création de la ligne
-				var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
+			this.currentShape = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
 				break;
 			}
 		}
 	}.bind(this) ;
 
 	this.onInteractionUpdate= function(DnD) {
-		if(butRect.checked) {
+	if(butRect.checked) {
 			//Création du rectangle
-			var rec = new Rectangle(DnD.xInitial, DnD.yInitial, DnD.xFinal-DnD.xInitial, DnD.yFinal-DnD.yInitial, this.currLineWidth, this.currColour);
+			var largeur = DnD.xFinal-DnD.xInitial;
+			var hauteur = DnD.yFinal-DnD.yInitial;
+			this.currentShape = new Rectangle(DnD.xInitial, DnD.yInitial, largeur, hauteur, this.currLineWidth, this.currColour);
 		}else if(butLine.checked){
 			//Création de la ligne
-			var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
+			this.currentShape = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
 		}else{
 			alert('La sélection de la forme est invalide');
 			console.log('La sélection de la forme est invalide');
 		}
-	//	rec.paint(ctx);
-/*		console.log("x initial : " + DnD.xInitial);
-		console.log("y initial : " + DnD.yInitial);
-		console.log("x final : " + DnD.xFinal);
-		console.log("y final : " + DnD.yFinal);
-*/
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		drawing.paint(ctx);
+		this.currentShape.paint(ctx);
  }.bind(this) ;
 
 	this.onInteractionEnd= function(DnD) {
 		if(butRect.checked) {
 			//Création du rectangle
-			var rec = new Rectangle(DnD.xInitial, DnD.yInitial, DnD.xFinal-DnD.xInitial, DnD.yFinal-DnD.yInitial, this.currLineWidth, this.currColour);
-			rec.paint(ctx);
+			var largeur = DnD.xFinal-DnD.xInitial;
+			var hauteur = DnD.yFinal-DnD.yInitial;
+			this.currentShape = new Rectangle(DnD.xInitial, DnD.yInitial, largeur, hauteur, this.currLineWidth, this.currColour);
+		//	rec.paint(ctx);
 		}else if(butLine.checked){
 			//Création de la ligne
-			var line = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
-			line.paint(ctx);
+			this.currentShape = new Line(DnD.xInitial, DnD.yInitial, DnD.xFinal, DnD.yFinal, this.currLineWidth, this.currColour);
+		//	line.paint(ctx);
 		}else{
 			alert('La sélection de la forme est invalide');
 			console.log('La sélection de la forme est invalide');
 		}
-/*		console.log("x initial : " + DnD.xInitial);
-		console.log("y initial : " + DnD.yInitial);
-		console.log("x final : " + DnD.xFinal);
-		console.log("y final : " + DnD.yFinal);*/
-
-		//Ajout de la forme à la liste de sessins du canvas
-
-	}.bind(this) ;
-};
+		//On reinitialise le canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		//Ajout de la forme à la liste de dessins du canvas
+		drawing.addForm(this.currentShape);
+		//On recree la liste de dessins du canvas
+		drawing.paint(ctx, canvas);
+        //
+        drawing.updateShapeList(this);
+	}.bind(this);
+}
