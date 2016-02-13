@@ -30,10 +30,34 @@ Drawing.prototype.paint = function(ctx) {
     });
 };
 
-Drawing.prototype.updateShapeList = function(pencil){
+Drawing.prototype.updateShapeList = function(form){
     var newForm = document.createElement('li');
-    newForm.id    = pencil.currEditingMode;
-    newForm.title = pencil.currEditingMode;
-    newForm.innerHTML=pencil.currEditingMode;
+    //Calcul de l'identifiant
+    var i = drawing.forms.length-1;
+    //Test du type de forme
+    if(form instanceof Rectangle){
+        //Affectation des attributs
+        newForm.id    = i;
+        newForm.title = "rectangle";
+        newForm.innerHTML=i+" rectangle";
+    }else if (form instanceof Line){
+        //Affectation des attributs
+        newForm.id    = i;
+        newForm.title = "ligne";
+        newForm.innerHTML=i+" ligne";
+    }
+
+    //Ajout de la forme dans une ligne de la liste
     document.getElementById('shapeList').appendChild(newForm);
+
+    //Ajout du bouton
+    var newButton = document.createElement('button');
+    newButton.id    = 'btn'+i;
+    newButton.setAttribute('class','btn btn-default');
+    newButton.setAttribute('type', 'button');
+    newButton.setAttribute('onClick', 'removeForm(id)');
+    newForm.appendChild(newButton);
+    var newSpan= document.createElement('span')
+    newSpan.setAttribute('class', 'glyphicon glyphicon-remove-sign');
+    newButton.appendChild(newSpan);
 };

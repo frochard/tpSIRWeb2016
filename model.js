@@ -9,6 +9,9 @@ function Drawing() {
     this.addForm = function(form) {
         this.forms.push(form);
     };
+    this.removeForm = function(index) {
+        this.forms.splice(index,1);
+    };
 };
 
 //Classe Form

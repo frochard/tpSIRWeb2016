@@ -46,7 +46,7 @@ function Pencil(ctx, drawing, canvas) {
 	}.bind(this) ;
 
 	this.onInteractionUpdate= function(DnD) {
-	if(butRect.checked) {
+		if(butRect.checked) {
 			//Création du rectangle
 			var largeur = DnD.xFinal-DnD.xInitial;
 			var hauteur = DnD.yFinal-DnD.yInitial;
@@ -61,7 +61,7 @@ function Pencil(ctx, drawing, canvas) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		drawing.paint(ctx);
 		this.currentShape.paint(ctx);
- }.bind(this) ;
+ 	}.bind(this) ;
 
 	this.onInteractionEnd= function(DnD) {
 		if(butRect.checked) {
@@ -84,7 +84,7 @@ function Pencil(ctx, drawing, canvas) {
 		drawing.addForm(this.currentShape);
 		//On recree la liste de dessins du canvas
 		drawing.paint(ctx, canvas);
-        //
-        drawing.updateShapeList(this);
+        //Mise à jour de la liste de formes du dessin
+        drawing.updateShapeList(this.currentShape);
 	}.bind(this);
 }
