@@ -32,32 +32,58 @@ Drawing.prototype.paint = function(ctx) {
 
 Drawing.prototype.updateShapeList = function(form){
     var newForm = document.createElement('li');
+    var myShapeList = document.getElementById('shapeList');
     //Calcul de l'identifiant
-    var i = drawing.forms.length-1;
+    var i = myShapeList.childNodes.length;//drawing.forms.length-1;
     //Test du type de forme
     if(form instanceof Rectangle){
         //Affectation des attributs
-        newForm.id    = i;
+        newForm.id    = 'form'+i;
         newForm.title = "rectangle";
         newForm.innerHTML=i+" rectangle";
     }else if (form instanceof Line){
         //Affectation des attributs
-        newForm.id    = i;
+        newForm.id    = 'form'+i;
         newForm.title = "ligne";
         newForm.innerHTML=i+" ligne";
     }
 
     //Ajout de la forme dans une ligne de la liste
-    document.getElementById('shapeList').appendChild(newForm);
+    myShapeList.appendChild(newForm);
 
     //Ajout du bouton
     var newButton = document.createElement('button');
-    newButton.id    = 'btn'+i;
+    newButton.id    = /*'btn'+*/i;
     newButton.setAttribute('class','btn btn-default');
     newButton.setAttribute('type', 'button');
-    newButton.setAttribute('onClick', 'removeForm(id)');
+    newButton.setAttribute('onClick', 'drawing.removeShapeFromList(id)');
     newForm.appendChild(newButton);
     var newSpan= document.createElement('span')
     newSpan.setAttribute('class', 'glyphicon glyphicon-remove-sign');
     newButton.appendChild(newSpan);
 };
+
+Drawing.prototype.removeShapeFromList = function(index) {
+    //Suppression de la forme dans la liste du dessin
+    this.removeForm(index);
+    //On reinitialise le canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //On recree la liste de dessins du canvas
+    drawing.paint(ctx, canvas);
+    //Mise à jour de la liste de formes du dessin
+    //On suppprime toute la liste de formes
+    var shapeList = document.getElementById('shapeList');
+   /* var children  = shapeList.childNodes;
+    for (var i = 0, c = children.length; i < c; i++) {
+        shapeList.removeChild(children[i]);
+    }*/
+    while( shapeList.firstChild) {
+        // La liste n'est pas une copie, elle sera donc réindexée à chaque appel
+        shapeList.removeChild( shapeList.firstChild);
+    }
+    //on parcourt la liste de forme du dessin
+    for(var i= 0, nb=drawing.forms.length;i<nb;i++){
+        //On ajoute la forme à la liste
+        drawing.updateShapeList(drawing.forms[i]);
+    }
+}
