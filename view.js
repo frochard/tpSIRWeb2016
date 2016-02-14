@@ -1,7 +1,5 @@
-// Implémenter ici les fonctions paint à ajouter dans chacune des classes du modèle.
+// Implémentation des fonctions paint à ajouter dans chacune des classes du modèle.
 Rectangle.prototype.paint = function(ctx) {
-    /*  console.log("ctx", JSON.stringify(this));
-     console.log(this.originX, this.originY, this.width, this.height);*/
     //Affectation couleur et epaisseur
     ctx.lineWidth=this.epaisseur;
     ctx.strokeStyle=this.couleur;
@@ -10,14 +8,21 @@ Rectangle.prototype.paint = function(ctx) {
 };
 
 Line.prototype.paint = function(ctx) {
- /*   console.log("ctx", JSON.stringify(this));
-    console.log(this.originX, this.originY, this.width, this.height);*/
     ctx.beginPath();
     //Affectation couleur et epaisseur
     ctx.lineWidth=this.epaisseur;
     ctx.strokeStyle=this.couleur;
     ctx.moveTo(this.xA, this.yA);
     ctx.lineTo(this.xB, this.yB);
+    ctx.stroke();
+};
+
+Circle.prototype.paint = function(ctx) {
+    ctx.beginPath();
+    //Affectation couleur et epaisseur
+    ctx.lineWidth=this.epaisseur;
+    ctx.strokeStyle=this.couleur;
+    ctx.arc(this.xCenter,this.yCenter,this.radius,0,2*Math.PI,true);
     ctx.stroke();
 };
 
@@ -31,29 +36,33 @@ Drawing.prototype.paint = function(ctx) {
 };
 
 Drawing.prototype.updateShapeList = function(form){
-    var newForm = document.createElement('li');
+    //Récupération de l'élément html à alimenter
     var myShapeList = document.getElementById('shapeList');
     //Calcul de l'identifiant
-    var i = myShapeList.childNodes.length;//drawing.forms.length-1;
+    var i = myShapeList.childNodes.length;
+    //Création de l'élément html à insérer
+    var newForm = document.createElement('li');
+    //Affectation de l'id de l'élément html inséré
+    newForm.id    = 'form'+i;
     //Test du type de forme
     if(form instanceof Rectangle){
         //Affectation des attributs
-        newForm.id    = 'form'+i;
         newForm.title = "rectangle";
         newForm.innerHTML=i+" rectangle";
     }else if (form instanceof Line){
         //Affectation des attributs
-        newForm.id    = 'form'+i;
         newForm.title = "ligne";
         newForm.innerHTML=i+" ligne";
+    }else if (form instanceof Circle){
+    //Affectation des attributs
+        newForm.title = "cercle";
+        newForm.innerHTML=i+" cercle";
     }
-
     //Ajout de la forme dans une ligne de la liste
     myShapeList.appendChild(newForm);
-
     //Ajout du bouton
     var newButton = document.createElement('button');
-    newButton.id    = /*'btn'+*/i;
+    newButton.id = i;
     newButton.setAttribute('class','btn btn-default');
     newButton.setAttribute('type', 'button');
     newButton.setAttribute('onClick', 'drawing.removeShapeFromList(id)');
@@ -73,10 +82,6 @@ Drawing.prototype.removeShapeFromList = function(index) {
     //Mise à jour de la liste de formes du dessin
     //On suppprime toute la liste de formes
     var shapeList = document.getElementById('shapeList');
-   /* var children  = shapeList.childNodes;
-    for (var i = 0, c = children.length; i < c; i++) {
-        shapeList.removeChild(children[i]);
-    }*/
     while( shapeList.firstChild) {
         // La liste n'est pas une copie, elle sera donc réindexée à chaque appel
         shapeList.removeChild( shapeList.firstChild);

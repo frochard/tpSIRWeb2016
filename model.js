@@ -1,6 +1,3 @@
-// Implémenter ici les 4 classes du modèle.
-// N'oubliez pas l'héritage !
-
 //Classe Drawing
 function Drawing() {
     //Déclarer un array
@@ -28,7 +25,6 @@ function Rectangle(originX, originY, width, height, epaisseur, couleur) {
     this.width=width;
     this.height=height;
 };
-Rectangle.prototype = new Form();
 
 //Classe Line
 function Line(xA, yA, xB, yB, epaisseur, couleur) {
@@ -38,4 +34,11 @@ function Line(xA, yA, xB, yB, epaisseur, couleur) {
     this.xB=xB;
     this.yB=yB;
 };
-Rectangle.prototype = new Form();
+
+//Classe Circle
+function Circle(xCenter, yCenter, radius, epaisseur, couleur) {
+    Form.call(this, epaisseur, couleur);
+   this.xCenter=xCenter;;
+    this.yCenter=yCenter;
+    this.radius=radius;
+};

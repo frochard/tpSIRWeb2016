@@ -1,8 +1,7 @@
-
 // La création d'un Dnd requière un canvas et un interacteur.
 // L'interacteur viendra dans un second temps donc ne vous en souciez pas au départ.
 function DnD(canvas, interactor) {
-	// Définir ici les attributs de la 'classe'
+	// Attributs de la 'classe'
     this.xInitial = 0;
     this.yInitial= 0;
     this.xFinal= 0;
@@ -18,9 +17,12 @@ function DnD(canvas, interactor) {
             this.xFinal=getMousePosition(canvas,evt).x;
             this.yFinal=getMousePosition(canvas,evt).y;
             pencil.onInteractionStart(this);
+            /*console.log("********Pression**********");
+            console.log("x initial"+this.xInitial);
+            console.log("y initial"+this.yInitial);
+            console.log("x final"+this.xFinal);
+            console.log("y final"+this.yFinal);*/
         }
-  /*    console.log("x initial : " + this.xInitial);
-      console.log("y initial : " + this.yInitial);*/
     }.bind(this) ;
 
     this.maFctGérantLeDéplacement=function(evt) {
@@ -28,16 +30,22 @@ function DnD(canvas, interactor) {
           this.xFinal=getMousePosition(canvas,evt).x;
           this.yFinal=getMousePosition(canvas,evt).y;
           pencil.onInteractionUpdate(this);
-/*        console.log("x final : " + this.xFinal);
-        console.log("y final : " + this.yFinal);*/
+          /*console.log("********Mouvement**********");
+          console.log("x initial"+this.xInitial);
+          console.log("y initial"+this.yInitial);
+          console.log("x final"+this.xFinal);
+          console.log("y final"+this.yFinal);*/
       }
     }.bind(this);
 
     this.maFctGérantLeRelâchement=function(evt) {
+        /*console.log("********Relachement**********");
+        console.log("x initial"+this.xInitial);
+        console.log("y initial"+this.yInitial);
+        console.log("x final"+this.xFinal);
+        console.log("y final"+this.yFinal);*/
         if(this.boutonPressee==true){
             this.boutonPressee=false;
-//            this.xFinal=getMousePosition(canvas,evt).x;
-  //          this.yFinal=getMousePosition(canvas,evt).y;
             pencil.onInteractionEnd(this);
             //Réinitialisation des coordonnées pour les Drag'n drop
             this.xInitial = 0;
