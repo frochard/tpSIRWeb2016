@@ -97,5 +97,7 @@ function Pencil(ctx, drawing, canvas) {
 		drawing.paint(ctx, canvas);
         //Mise à jour de la liste de formes du dessin
         drawing.updateShapeList(this.currentShape);
+		//Réinitialisation de la forme courante
+		this.currentShape=null;
 	}.bind(this);
 }
