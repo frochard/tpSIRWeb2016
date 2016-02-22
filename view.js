@@ -1,5 +1,6 @@
 // Implémentation des fonctions paint à ajouter dans chacune des classes du modèle.
 Rectangle.prototype.paint = function(ctx) {
+    ctx.beginPath();
     //Affectation couleur et epaisseur
     ctx.lineWidth=this.epaisseur;
     ctx.strokeStyle=this.couleur;
